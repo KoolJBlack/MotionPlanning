@@ -34,6 +34,9 @@ class Point:
 	def __len__(self):
 		return 2
 
+	def __str__(self):
+		return str(self.x) + ', ' + str(self.y) 
+
 
 class Poly:
 	"""A poly is a list of points"""
@@ -43,9 +46,11 @@ class Poly:
 
 class MapParser:
 	def __init__(self, target_file):
-		self.polys = []
 		self.target = target_file
 		self.buildings = []
+		self.map_bounds = None
+		self.bounds = None
+		self.polys = []
 
 	def parse_map(self):
 		"""Reference: http://wiki.openstreetmap.org/wiki/OSM_XML"""
@@ -54,6 +59,13 @@ class MapParser:
 
 		# Read the bounds of the map
 		map_bounds = root[0].attrib
+		self.map_bounds = map_bounds
+		self.bounds = dict()
+		self.bounds['minx'] = merc_x(float(map_bounds['minlon']))
+		self.bounds['maxx'] = merc_x(float(map_bounds['maxlon']))
+		self.bounds['miny'] = merc_y(float(map_bounds['minlat']))
+		self.bounds['maxy'] = merc_y(float(map_bounds['maxlat']))
+		#print self.map_bounds
 
 		# Read all of the nodes
 		nodes = dict()
@@ -62,7 +74,7 @@ class MapParser:
 			id = child.attrib['id']
 			lon = child.attrib['lon']
 			lat = child.attrib['lat']
-			nodes[id] = [lon, lat]
+			nodes[id] = [float(lon), float(lat)]
 
 		# Create a building for each way that describes a building
 		buildings = []
@@ -73,14 +85,12 @@ class MapParser:
 				building = []
 				for nd in way.iter('nd'):
 					building.append(nodes[nd.attrib['ref']])
-				print 'building', building
+				#print 'building', building
 				buildings.append(building)
 		self.buildings  =buildings
 
 		# Convert lon/lat to cartisan coordinates
 		self.transform_points()
-
-		return root
 
 	def transform_points(self):
 		"""Converts lon/lat points to x,y"""
@@ -91,13 +101,17 @@ class MapParser:
 			for coord in building:
 				lon = coord[0]
 				lat = coord[1]
-				points.append(Point(merc_x(lon), merc_y(lat)))
+				point = Point(merc_x(lon), merc_y(lat))
+				points.append(point)
 			poly = Poly()
 			poly.points = points
 			self.polys.append(points) 
 
 	def get_polys(self):
 		return self.points
+
+	def get_bounds(self):
+		return self.bounds
 
 def main():
 	pass
