@@ -1,4 +1,25 @@
 import xml.etree.ElementTree as ET
+import math
+
+def merc_x(lon):
+	r_major=6378137.000
+	return r_major*math.radians(lon)
+ 
+def merc_y(lat):
+	if lat>89.5:lat=89.5
+	if lat<-89.5:lat=-89.5
+	r_major=6378137.000
+	r_minor=6356752.3142
+	temp=r_minor/r_major
+	eccent=math.sqrt(1-temp**2)
+	phi=math.radians(lat)
+	sinphi=math.sin(phi)
+	con=eccent*sinphi
+	com=eccent/2
+	con=((1.0-con)/(1.0+con))**com
+	ts=math.tan((math.pi/2-phi)/2)/con
+	y=0-r_major*math.log(ts)
+	return y
 
 class Point:
 	"""2D class representaiton of a point"""
@@ -18,13 +39,13 @@ class Poly:
 	"""A poly is a list of points"""
 	def __init__(self):
 		self.points = []
-		self.buildings = []
 
 
 class MapParser:
 	def __init__(self, target_file):
 		self.polys = []
 		self.target = target_file
+		self.buildings = []
 
 	def parse_map(self):
 		"""Reference: http://wiki.openstreetmap.org/wiki/OSM_XML"""
@@ -56,11 +77,24 @@ class MapParser:
 				buildings.append(building)
 		self.buildings  =buildings
 
+		# Convert lon/lat to cartisan coordinates
+		self.transform_points()
+
 		return root
 
-	def normalize_points(self):
+	def transform_points(self):
 		"""Converts lon/lat points to x,y"""
-		pass
+		# Populates the polys list using the buildings input
+		self.polys = []
+		for building in self.buildings:
+			points = []
+			for coord in building:
+				lon = coord[0]
+				lat = coord[1]
+				points.append(Point(merc_x(lon), merc_y(lat)))
+			poly = Poly()
+			poly.points = points
+			self.polys.append(points) 
 
 	def get_polys(self):
 		return self.points
