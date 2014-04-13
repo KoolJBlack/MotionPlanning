@@ -89,38 +89,46 @@ class MapParser:
 				buildings.append(building)
 		self.buildings  =buildings
 
-		# Convert lon/lat to cartisan coordinates
-		self.transform_points()
+		# Convert lon/lat to dartesian coordinates
+		self.convert_points()
 
-	def transform_points(self):
-		"""Converts lon/lat points to x,y"""
+	def convert_points(self, new_range=(1000,1000)):
+		"""Converts lon/lat points to dartesian"""
 		# Populates the polys list using the buildings input
+		# Tranform all of the coordinates to fit between 0 and the new_range
+		x_range = self.bounds['maxx'] - self.bounds['minx']
+		y_range = self.bounds['maxy'] - self.bounds['miny']
+		x_min = self.bounds['minx']
+		y_min = self.bounds['miny']
 		self.polys = []
 		for building in self.buildings:
 			points = []
 			for coord in building:
 				lon = coord[0]
 				lat = coord[1]
-				point = Point(merc_x(lon), merc_y(lat))
+				x = merc_x(lon)
+				y = merc_y(lat)
+				point = Point((x-x_min)/x_range * new_range[0], ((y-y_min)/y_range) * new_range[1])
 				points.append(point)
+				print point
 			poly = Poly()
-			poly.points = points
-			self.polys.append(points) 
+			poly.points = points[:-1]  # The last point is a repeat of the first point
+			self.polys.append(poly) 
 
 	def get_polys(self):
-		return self.points
+		return self.polys
 
 	def get_bounds(self):
 		return self.bounds
 
 def main():
-	pass
+	# For testing
+	parser = MapParser('data/map.osm')
+	root = parser.parse_map()
 
 if __name__ == "__main__":
     main()
 
-# For testing
 
-parser = MapParser('data/map.osm')
-root = parser.parse_map()
+
 

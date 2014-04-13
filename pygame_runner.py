@@ -76,6 +76,8 @@ class BasePygameApp:
 	# =============================================================================
 	def size(self, width, height):
 		self.screen = pygame.display.set_mode((width, height))
+		self.WIDTH = width
+		self.HEIGHT = height
 
 	def background(self, color):
 		self.screen.fill(color)

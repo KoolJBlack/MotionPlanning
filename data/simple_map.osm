@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.3.3 (25337 thorn-01.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="42.3756300" minlon="-71.1081000" maxlat="42.3759900" maxlon="-71.1075600"/>
+ <node id="61324842" visible="true" version="3" changeset="448837" timestamp="2009-02-15T08:23:08Z" user="crschmidt" uid="1034" lat="42.3768370" lon="-71.1073560"/>
+ <node id="61324870" visible="true" version="6" changeset="862336" timestamp="2009-03-26T16:56:31Z" user="Pouletic" uid="110489" lat="42.3746450" lon="-71.1078810"/>
+ <node id="61324911" visible="true" version="3" changeset="448837" timestamp="2009-02-15T08:23:13Z" user="crschmidt" uid="1034" lat="42.3759690" lon="-71.1075760"/>
+ <node id="325370950" visible="true" version="1" changeset="727013" timestamp="2009-01-04T05:59:18Z" user="crschmidt" uid="1034" lat="42.3758523" lon="-71.1079859"/>
+ <node id="325370951" visible="true" version="1" changeset="727013" timestamp="2009-01-04T05:59:18Z" user="crschmidt" uid="1034" lat="42.3758628" lon="-71.1080706"/>
+ <node id="325370953" visible="true" version="1" changeset="727013" timestamp="2009-01-04T05:59:18Z" user="crschmidt" uid="1034" lat="42.3759494" lon="-71.1080511"/>
+ <node id="325370954" visible="true" version="1" changeset="727013" timestamp="2009-01-04T05:59:18Z" user="crschmidt" uid="1034" lat="42.3759388" lon="-71.1079664"/>
+ <node id="326156110" visible="true" version="1" changeset="730094" timestamp="2009-01-04T22:30:50Z" user="crschmidt" uid="1034" lat="42.3759250" lon="-71.1078599"/>
+ <node id="326161381" visible="true" version="1" changeset="730094" timestamp="2009-01-04T22:34:14Z" user="crschmidt" uid="1034" lat="42.3757074" lon="-71.1079120"/>
+ <node id="326168678" visible="true" version="1" changeset="730269" timestamp="2009-01-04T22:39:19Z" user="crschmidt" uid="1034" lat="42.3756818" lon="-71.1077174"/>
+ <node id="326232872" visible="true" version="1" changeset="734502" timestamp="2009-01-04T23:32:33Z" user="crschmidt" uid="1034" lat="42.3758993" lon="-71.1076653"/>
+ <way id="8615890" visible="true" version="2" changeset="476449" timestamp="2009-02-16T02:15:38Z" user="crschmidt" uid="1034">
+  <nd ref="61324870"/>
+  <nd ref="61324911"/>
+  <nd ref="61324842"/>
+  <tag k="attribution" v="Office of Geographic and Environmental Information (MassGIS)"/>
+  <tag k="condition" v="fair"/>
+  <tag k="created_by" v="JOSM"/>
+  <tag k="highway" v="residential"/>
+  <tag k="lanes" v="2"/>
+  <tag k="massgis:way_id" v="141334"/>
+  <tag k="name" v="Hovey Avenue"/>
+  <tag k="source" v="massgis_import_v0.1_20071008165629"/>
+  <tag k="width" v="12.8"/>
+ </way>
+ <way id="29516558" visible="true" version="2" changeset="17726222" timestamp="2013-09-08T02:49:59Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="325370950"/>
+  <nd ref="325370951"/>
+  <nd ref="325370953"/>
+  <nd ref="325370954"/>
+  <nd ref="325370950"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29634003" visible="true" version="2" changeset="17726616" timestamp="2013-09-08T04:16:43Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="326168678"/>
+  <nd ref="326161381"/>
+  <nd ref="326156110"/>
+  <nd ref="326232872"/>
+  <nd ref="326168678"/>
+  <tag k="building" v="yes"/>
+ </way>
+</osm>
