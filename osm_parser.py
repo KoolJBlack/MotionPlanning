@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import math
 
+''' Reference for next 2 functions: http://wiki.openstreetmap.org/wiki/Mercator'''
 def merc_x(lon):
 	r_major=6378137.000
 	return r_major*math.radians(lon)
@@ -81,6 +82,8 @@ class MapParser:
 		for way in root.iter('way'):
 			# We only care about those tagged buildings
 			tag = way.find('tag')
+			if tag == None:
+				continue
 			if tag.attrib['k'] == 'building' and tag.attrib['v'] == 'yes':
 				building = []
 				for nd in way.iter('nd'):
@@ -90,7 +93,7 @@ class MapParser:
 		self.buildings  =buildings
 
 		# Convert lon/lat to dartesian coordinates
-		self.convert_points()
+		#self.convert_points()
 
 	def convert_points(self, new_range=(1000,1000)):
 		"""Converts lon/lat points to dartesian"""
@@ -108,9 +111,9 @@ class MapParser:
 				lat = coord[1]
 				x = merc_x(lon)
 				y = merc_y(lat)
-				point = Point((x-x_min)/x_range * new_range[0], ((y-y_min)/y_range) * new_range[1])
+				point = Point((x-x_min)/x_range * new_range[0], ( -1*(y-y_min)/y_range +1) * new_range[1])
 				points.append(point)
-				print point
+				#print point
 			poly = Poly()
 			poly.points = points[:-1]  # The last point is a repeat of the first point
 			self.polys.append(poly) 

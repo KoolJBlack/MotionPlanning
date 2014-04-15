@@ -4,7 +4,8 @@ from osm_parser import *
 # =============================================================================
 # Constants
 # =============================================================================
-MAP_DATA_FILE = 'data/simple_map.osm'
+#MAP_DATA_FILE = 'data/simple_map.osm'
+MAP_DATA_FILE = 'data/medium_map.osm'
 
 LINE_WIDTH = 0
 
@@ -27,6 +28,7 @@ class MyPygameApp(BasePygameApp):
 		# Parse the map and init the mtion planner
 		parser = MapParser(MAP_DATA_FILE)
 		parser.parse_map()
+		parser.convert_points((self.WIDTH, self.HEIGHT))
 
 		self.motion_planner = MotionPlanner()
 		self.motion_planner.map_parser = parser
