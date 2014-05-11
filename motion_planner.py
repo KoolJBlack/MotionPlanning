@@ -1,9 +1,10 @@
 from osm_parser import *
+import numpy as np
 
 class Robot:
 	def __init__(self):
-		position = Point(-1,-1)
-		theta = 0.0
+		self.position = Point(-1,-1)
+		self.theta = 0.0
 
 	def set_body(self, poly):
 		self.body = poly
@@ -14,6 +15,12 @@ class Robot:
 	def rotate(self, delta_theta):
 		self.theta += delta_theta
 
+
+class PointNode:
+        """ node representing a point """
+        def __init__(self, x, y):
+                self.p = Point(x, y)
+                self.adjacent = []
 
 class MotionPlanner:
 	def __init__(self, screen_width, screen_height):

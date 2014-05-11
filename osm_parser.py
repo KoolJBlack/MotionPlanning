@@ -42,7 +42,6 @@ class Point:
 	def __add__(self, other):
 		return Point(self.x + other.x, self.y + other.y)
 
-
 class Poly:
 	"""A poly is a list of points"""
 	def __init__(self):
