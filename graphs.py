@@ -1,3 +1,15 @@
+# =============================================================================
+# Visibility Graph
+# =============================================================================
+
+def shortest_path_visibility_graph(polys, start, goal):
+	
+
+
+# =============================================================================
+# Graph Search Algorithms
+# =============================================================================
+
 # Priority dictionary using binary heaps
 # David Eppstein, UC Irvine, 8 Mar 2002
 
@@ -145,7 +157,6 @@ def shortest_path(graph,start,end):
 	The output is a list of the vertices in order along
 	the shortest path.
 	"""
-
 	final_distances,predecessors = dijkstra(graph,start,end)
 	path = []
 	while 1:
@@ -154,6 +165,12 @@ def shortest_path(graph,start,end):
 		end = predecessors[end]
 	path.reverse()
 	return path
+
+
+# =============================================================================
+# Main
+# =============================================================================
+
 
 def main():
 	# For testing
