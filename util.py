@@ -12,7 +12,7 @@ class Point:
         return self.items[index]
 
     def dist_to_point(self, other):
-        return sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
+        return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
 
     def __len__(self):
         return 2
@@ -29,7 +29,35 @@ class Poly:
         self.points = []
 
 def p2p_dist(p1, p2):
+    ''' Returns euclidian distance between two points'''
     return p1.dist_to_point(p2) 
+
+def compute_adjacency_list(p_origin, other_points):
+    ''' Creates adjacency list for a point in the form: 
+    '{'u' : 10, 'x' : 5}
+    '''
+    adjacenct = dict()
+    for point in other_points:
+        dist = p_origin.dist_to_point(point)
+        adjacenct[point] = dist
+    return adjacenct
+
+def get_all_points_from_polys(polys):
+    ''' Breaks a list of polygons into a list of points '''
+    points = list()
+    for poly in polys:
+        points.extend(poly.points)
+    return points
+
+def nearest_neighbor(p_origin, points):
+    ''' Find the nearest neighboring point in the points list and returns it'''
+    dist = 99999999999999
+    best_point = None
+    for point in points:
+        if point.dist_to_point(p_origin) < dist:
+            dist = point.dist_to_point(p_origin)
+            best_point = point
+    return point
 
 
 # =============================================================================

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.3.3 (16733 thorn-01.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="42.3736900" minlon="-71.0902800" maxlat="42.3740100" maxlon="-71.0898300"/>
+ <node id="325406010" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739196" lon="-71.0901145"/>
+ <node id="325406012" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739329" lon="-71.0902289"/>
+ <node id="325406013" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739882" lon="-71.0902172"/>
+ <node id="325406015" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739673" lon="-71.0900375"/>
+ <node id="325406016" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739250" lon="-71.0900465"/>
+ <node id="325406019" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:17Z" user="crschmidt" uid="1034" lat="42.3739326" lon="-71.0901117"/>
+ <node id="325406054" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3737778" lon="-71.0901333"/>
+ <node id="325406057" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3737938" lon="-71.0902709"/>
+ <node id="325406061" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738775" lon="-71.0902531"/>
+ <node id="325406063" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738730" lon="-71.0902143"/>
+ <node id="325406064" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738883" lon="-71.0902110"/>
+ <node id="325406065" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738825" lon="-71.0901603"/>
+ <node id="325406066" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738655" lon="-71.0901639"/>
+ <node id="325406069" visible="true" version="1" changeset="727062" timestamp="2009-01-04T06:14:18Z" user="crschmidt" uid="1034" lat="42.3738598" lon="-71.0901159"/>
+ <node id="325542605" visible="true" version="1" changeset="727132" timestamp="2009-01-04T07:10:34Z" user="crschmidt" uid="1034" lat="42.3737370" lon="-71.0898607"/>
+ <node id="325542606" visible="true" version="1" changeset="727132" timestamp="2009-01-04T07:10:34Z" user="crschmidt" uid="1034" lat="42.3737475" lon="-71.0899508"/>
+ <node id="325542607" visible="true" version="1" changeset="727132" timestamp="2009-01-04T07:10:34Z" user="crschmidt" uid="1034" lat="42.3738652" lon="-71.0899258"/>
+ <node id="325542608" visible="true" version="1" changeset="727132" timestamp="2009-01-04T07:10:34Z" user="crschmidt" uid="1034" lat="42.3738548" lon="-71.0898357"/>
+ <node id="327701449" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3737588" lon="-71.0899866"/>
+ <node id="327701452" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3737674" lon="-71.0900610"/>
+ <node id="327701454" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738026" lon="-71.0900535"/>
+ <node id="327701456" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738047" lon="-71.0900718"/>
+ <node id="327701457" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738742" lon="-71.0900572"/>
+ <node id="327701458" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738694" lon="-71.0900171"/>
+ <node id="327701459" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738945" lon="-71.0900117"/>
+ <node id="327701460" visible="true" version="1" changeset="742583" timestamp="2009-01-05T23:07:41Z" user="crschmidt" uid="1034" lat="42.3738884" lon="-71.0899592"/>
+ <way id="29520770" visible="true" version="2" changeset="17726241" timestamp="2013-09-08T02:53:59Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="325406010"/>
+  <nd ref="325406012"/>
+  <nd ref="325406013"/>
+  <nd ref="325406015"/>
+  <nd ref="325406016"/>
+  <nd ref="325406019"/>
+  <nd ref="325406010"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29520773" visible="true" version="2" changeset="17726241" timestamp="2013-09-08T02:53:59Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="325406054"/>
+  <nd ref="325406057"/>
+  <nd ref="325406061"/>
+  <nd ref="325406063"/>
+  <nd ref="325406064"/>
+  <nd ref="325406065"/>
+  <nd ref="325406066"/>
+  <nd ref="325406069"/>
+  <nd ref="325406054"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29746600" visible="true" version="2" changeset="17726953" timestamp="2013-09-08T05:29:17Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="327701449"/>
+  <nd ref="327701452"/>
+  <nd ref="327701454"/>
+  <nd ref="327701456"/>
+  <nd ref="327701457"/>
+  <nd ref="327701458"/>
+  <nd ref="327701459"/>
+  <nd ref="327701460"/>
+  <nd ref="327701449"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29538049" visible="true" version="2" changeset="17739496" timestamp="2013-09-08T20:06:50Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="325542605"/>
+  <nd ref="325542606"/>
+  <nd ref="325542607"/>
+  <nd ref="325542608"/>
+  <nd ref="325542605"/>
+  <tag k="building" v="yes"/>
+ </way>
+</osm>

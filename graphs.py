@@ -1,9 +1,25 @@
+from __future__ import generators
+from util import *
+
 # =============================================================================
 # Visibility Graph
 # =============================================================================
 
-def shortest_path_visibility_graph(polys, start, goal):
-	
+def shortest_path_visibility_graph(polys, start, end):
+	# Create the visibility grpah
+	visibility_graph = compute_visibility_graph(polys)	
+	# Run dijkstra
+	path = shortest_path(visibility_graph, start, end)
+	# Return the points in the path
+	return path
+
+def compute_visibility_graph(polys):
+	# Assign an arc weight to each item in the graph
+	points = get_all_points_from_polys(polys)
+	graph = dict()
+	for index, point in enumerate(points):
+		graph[point] = compute_adjacency_list(point, points[:index] + points[index + 1:])
+	return graph
 
 
 # =============================================================================
@@ -13,7 +29,6 @@ def shortest_path_visibility_graph(polys, start, goal):
 # Priority dictionary using binary heaps
 # David Eppstein, UC Irvine, 8 Mar 2002
 
-from __future__ import generators
 
 class priorityDictionary(dict):
     def __init__(self):
@@ -83,7 +98,6 @@ too large, to avoid memory leakage.'''
 # David Eppstein, UC Irvine, 4 April 2002
 
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228
-#from priodict import priorityDictionary
 
 def dijkstra(graph,start,end=None):
 	"""
@@ -180,8 +194,30 @@ def main():
 
 	# Get shortest path
 	path = shortest_path(test_graph, start, end)
+	print 'Shortest path with string graph', path
 
-	print path
+	a = Point(0, 0)
+	b = Point(3, 3)
+	c = Point(3, 6)
+	d = Point(6, 6)
+
+	test_graph_points = dict()
+	test_graph_points[a] = compute_adjacency_list(a, [b, c])
+	test_graph_points[b] = compute_adjacency_list(b, [a, c, d])
+	test_graph_points[c] = compute_adjacency_list(c, [a, b, d])
+	test_graph_points[d] = compute_adjacency_list(d, [b, c])
+
+	start = a
+	end = d
+
+	# Get shortest path
+	path = shortest_path(test_graph_points, start, end)
+	print 'Shortest path with point graph'
+	for point in path:
+		print point.x, point.y
+
+
+
 
 if __name__ == "__main__":
     main()
