@@ -22,6 +22,7 @@ def merc_y(lat):
 	y=0-r_major*math.log(ts)
 	return y
 
+
 class Point:
 	"""2D class representaiton of a point"""
 	def __init__(self, x, y):
@@ -37,6 +38,9 @@ class Point:
 
 	def __str__(self):
 		return str(self.x) + ', ' + str(self.y) 
+
+	def __add__(self, other):
+		return Point(self.x + other.x, self.y + other.y)
 
 
 class Poly:
@@ -123,6 +127,7 @@ class MapParser:
 
 	def get_bounds(self):
 		return self.bounds
+
 
 def main():
 	# For testing
