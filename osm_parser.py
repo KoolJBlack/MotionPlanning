@@ -1,6 +1,8 @@
 import xml.etree.ElementTree as ET
 import math
 
+from util import *
+
 ''' Reference for next 2 functions: http://wiki.openstreetmap.org/wiki/Mercator'''
 def merc_x(lon):
 	r_major=6378137.000
@@ -21,32 +23,6 @@ def merc_y(lat):
 	ts=math.tan((math.pi/2-phi)/2)/con
 	y=0-r_major*math.log(ts)
 	return y
-
-
-class Point:
-	"""2D class representaiton of a point"""
-	def __init__(self, x, y):
-		self.x = x
-		self.y = y
-		self.items = [x,y]
-
-	def __getitem__(self, index):
-		return self.items[index]
-
-	def __len__(self):
-		return 2
-
-	def __str__(self):
-		return str(self.x) + ', ' + str(self.y) 
-
-	def __add__(self, other):
-		return Point(self.x + other.x, self.y + other.y)
-
-class Poly:
-	"""A poly is a list of points"""
-	def __init__(self):
-		self.points = []
-
 
 class MapParser:
 	def __init__(self, target_file):

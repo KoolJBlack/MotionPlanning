@@ -1,3 +1,41 @@
+# =============================================================================
+# Map Primitives
+# =============================================================================
+class Point:
+    ''' 2D class representaiton of a point '''
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.items = [x,y]
+
+    def __getitem__(self, index):
+        return self.items[index]
+
+    def dist_to_point(self, other):
+        return sqrt((self.x - other.x) ** 2 + (self.y - other.y) ** 2)
+
+    def __len__(self):
+        return 2
+
+    def __str__(self):
+        return str(self.x) + ', ' + str(self.y) 
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+class Poly:
+    ''' A poly is a list of points '''
+    def __init__(self):
+        self.points = []
+
+def p2p_dist(p1, p2):
+    return p1.dist_to_point(p2) 
+
+
+# =============================================================================
+# Line Segments
+# =============================================================================
+
 def ccw(A, B, C):
     return (C[1] - A[1])*(B[0] - A[0]) > (B[1] - A[1])*(C[0] - A[0])
 """
