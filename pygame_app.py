@@ -7,9 +7,12 @@ from graphs import *
 # =============================================================================
 #MAP_DATA_FILE = 'data/simple_map.osm'
 #MAP_DATA_FILE = 'data/medium_map.osm'
-MAP_DATA_FILE = 'data/four_map.osm'
+#MAP_DATA_FILE = 'data/four_map.osm'
+MAP_DATA_FILE = 'data/one_building.osm'
 
-LINE_WIDTH = 0
+
+
+LINE_WIDTH = 3
 
 # =============================================================================
 # Other Classes
@@ -46,6 +49,8 @@ class MyPygameApp(BasePygameApp):
 		for point in path:
 			print point.x, point.y
 
+		self.path = path 
+
 
 	def draw(self):
 		# Clear the screen
@@ -66,6 +71,12 @@ class MyPygameApp(BasePygameApp):
 		polys = self.motion_planner.map_parser.get_polys()
 		for poly in polys:
 			pygame.draw.polygon(self.screen, BLACK, poly.points, LINE_WIDTH)
+
+		# Draw the perfect path
+		for index in range(len(self.path)-1):
+			p1 = self.path[index]
+			p2 = self.path[index + 1]
+			pygame.draw.line(self.screen, (0, 50, 255), p1, p2, LINE_WIDTH)
 
 # =============================================================================
 # Runner Methods
