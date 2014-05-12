@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 # =============================================================================
 # Map Primitives
@@ -6,32 +7,66 @@ import numpy as np
 class Point:
     ''' 2D class representaiton of a point '''
     def __init__(self, x, y):
-        self.x = x
-        self.y = y
+        self.x = float(x)
+        self.y = float(y)
         self.items = [x,y]
-
+        self.polygonal = False
+        self.numpyRep = np.array([self.x, self.y])
     def __getitem__(self, index):
         return self.items[index]
-
     def dist_to_point(self, other):
         return ((self.x - other.x) ** 2 + (self.y - other.y) ** 2) ** 0.5
-
     def __len__(self):
         return 2
-
     def __str__(self):
         return str(self.x) + ', ' + str(self.y) 
-
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y)
-    
-    def numpyRep(self):
-        return np.array([self.x, self.y])
-
+    def setPreSuc (self, pre, suc, ccw):
+        self.pre = pre
+        toPre = self.pre.numpyRep - self.numpyRep
+        self.preAngle = math.atan2(toPre[1],toPre[0])
+        self.suc = suc
+        toSuc = self.suc.numpyRep - self.numpyRep
+        self.sucAngle = math.atan2(toSuc[1],toSuc[0])
+        self.ccw = ccw
+        self.polygonal = True
+    def angleOutside(self, angle):
+        if not self.polygonal:
+            return True
+        insideCCW = False
+        if self.preAngle > 0:
+            if self.sucAngle > 0:
+                if self.sucAngle > self.preAngle:
+                    insideCCW = angle <= self.sucAngle and angle >= self.preAngle
+                else: 
+                    insideCCW = angle <= self.sucAngle or angle >= self.preAngle
+            else:
+                insideCCW = angle <= self.sucAngle or angle >= self.preAngle
+        else:
+            if self.sucAngle < 0:
+                if self.sucAngle > self.preAngle:
+                    insideCCW = angle <= self.sucAngle and angle >= self.preAngle
+                else:
+                    insideCCW = angle <= self.sucAngle or angle >= self.preAngle
+            else:
+                insideCCW = angle <= self.sucAngle and angle >= self.preAngle
+        return insideCCW if self.ccw else not insideCCW
+                    
 class Poly:
     ''' A poly is a list of points '''
     def __init__(self):
         self.points = []
+    def computeWinding(self):
+        signedArea = 0
+        for i in range(len(self.points)-1, -1, -1):
+            pi = self.points[i - 1]
+            pip1 = self.points[i] #i + 1
+            signedArea += .5 * (pi.x*pip1.y - pip1.x*pi.y)
+        self.ccw = signedArea > 0
+        for i in range(len(self.points)):
+            self.points[i].setPreSuc(self.points[i - 1], self.points[(i + 1) % len(self.points)], self.ccw)
+
 
 def p2p_dist(p1, p2):
     ''' Returns euclidian distance between two points'''
@@ -44,15 +79,17 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
     adjacent = dict()
     for point in other_points:
         unobstructed = True
-        pathSeg = LineSegment(p_origin.numpyRep(), point.numpyRep())
+        pathSeg = LineSegment(p_origin.numpyRep, point.numpyRep)
+        toPoint = point.numpyRep - p_origin.numpyRep
+        originAngle = math.atan2(toPoint[1], toPoint[0])
+        clear = p_origin.angleOutside(originAngle)
+        if not clear:
+            unobstructed = False
+            continue
         for edge in polyEdges:
             if pathSeg.intersects(edge):
                 unobstructed = False
                 break
-                #print 'No interesection:'
-                #print pathSeg
-                #print edge
-                #raw_input()
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -67,14 +104,14 @@ def get_all_points_from_polys(polys):
 
 def get_all_segments_from_polys(polys):
     segments = []
-    print 'get_all_segments_from_polys'
+    #print 'get_all_segments_from_polys'
     for poly in polys:
         # take advantage of l[-1] being l[len-1]
-        print 'new poly'
+        #print 'new poly'
         for i in range(len(poly.points)-1, -1, -1):
-            print i, i-1
-            segments.append(LineSegment(poly.points[i].numpyRep(),
-                                        poly.points[i-1].numpyRep()))
+            #print i, i-1
+            segments.append(LineSegment(poly.points[i].numpyRep,
+                                        poly.points[i-1].numpyRep))
     return segments
 
 def nearest_neighbor(p_origin, points):

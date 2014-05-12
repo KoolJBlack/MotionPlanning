@@ -95,6 +95,7 @@ class MapParser:
 				#print point
 			poly = Poly()
 			poly.points = points[:-1]  # The last point is a repeat of the first point
+                        poly.computeWinding()
 			self.polys.append(poly) 
 
 	def get_polys(self):

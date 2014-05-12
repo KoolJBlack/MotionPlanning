@@ -7,8 +7,8 @@ from graphs import *
 # =============================================================================
 #MAP_DATA_FILE = 'data/simple_map.osm'
 #MAP_DATA_FILE = 'data/medium_map.osm'
-#MAP_DATA_FILE = 'data/four_map.osm'
-MAP_DATA_FILE = 'data/one_building.osm'
+MAP_DATA_FILE = 'data/four_map.osm'
+#MAP_DATA_FILE = 'data/one_building.osm'
 
 
 
@@ -23,7 +23,6 @@ LINE_WIDTH = 3
 # Pygame App
 # =============================================================================
 class MyPygameApp(BasePygameApp):
-
 	def setup(self):
 		# Init the screen
 		self.size(800, 800)
