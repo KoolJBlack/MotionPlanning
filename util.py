@@ -93,9 +93,9 @@ def compute_adjacency_list(p_origin, other_points, grid):
                     debug_intersectionsTested += 1
                     if pathSeg.intersects(edge):
                         unobstructed = False
-                        #print debug_intersectionsTested / float(len(other_points))
+                        print debug_intersectionsTested
                         break
-                    #print debug_intersectionsTested / float(len(other_points))
+                    print debug_intersectionsTested
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
