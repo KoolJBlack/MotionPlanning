@@ -6,9 +6,9 @@ from graphs import *
 # Constants
 # =============================================================================
 #MAP_DATA_FILE = 'data/simple_map.osm'
-#MAP_DATA_FILE = 'data/medium_map.osm'
+MAP_DATA_FILE = 'data/medium_map.osm'
 #MAP_DATA_FILE = 'data/four_map.osm'
-MAP_DATA_FILE = 'data/one_building.osm'
+#MAP_DATA_FILE = 'data/one_building.osm'
 
 
 

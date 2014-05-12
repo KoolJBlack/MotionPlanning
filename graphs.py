@@ -15,21 +15,24 @@ def shortest_path_visibility_graph(polys, start, end):
 
 def compute_visibility_graph(polys, start, end):
     # Assign an arc weight to each item in the graph
-    points = get_all_points_from_polys(polys)
-    points.extend([start, end])
+    pointGrid = {}
+    add_all_points_from_polys(polys, pointGrid)
+    add_point_to_grid(start, pointGrid)
+    add_point_to_grid(end, pointGrid)
     width = 800 #TODO clean
     height = 800
-    extraFactor = 2 #how much finer than max?
-    points.extend([Point(x, y) for x in xrange(0, width, MAX_DISTANCE / extraFactor)
-                   for y in xrange(0, height, MAX_DISTANCE / extraFactor)])
-    grid = {}
-    add_all_segments_from_polys(polys, grid)
+    [(add_point_to_grid(Point(x, y), pointGrid))
+     for x in xrange(0, width, MAX_DISTANCE)
+     for y in xrange(0, height, MAX_DISTANCE)]
+    segGrid = {}
+    add_all_segments_from_polys(polys, segGrid)
     graph = dict()
-    for index, point in enumerate(points):
-        print index
-        graph[point] = compute_adjacency_list(point,
-                                              points[:index] + points[index + 1:],
-                                              grid)
+    i = 0
+    for loc in pointGrid:
+        for p in pointGrid[loc]:
+            i += 1
+            print i
+            graph[p] = compute_adjacency_list(p, pointGrid, segGrid)
     return graph
 
 

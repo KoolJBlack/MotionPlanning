@@ -11,6 +11,8 @@ class Point:
         self.x = float(x)
         self.y = float(y)
         self.items = [x,y]
+        #polygonal is whether point is on a polygon
+        #ie. start and end
         self.polygonal = False
         self.numpyRep = np.array([self.x, self.y])
     def __getitem__(self, index):
@@ -24,6 +26,8 @@ class Point:
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y)
     def setPreSuc (self, pre, suc, ccw):
+        ''' set the predecessor and successor for a polygonal point
+        used to tell if angles point into or out of polygons'''
         self.pre = pre
         toPre = self.pre.numpyRep - self.numpyRep
         self.preAngle = math.atan2(toPre[1],toPre[0])
@@ -33,6 +37,9 @@ class Point:
         self.ccw = ccw
         self.polygonal = True
     def angleOutside(self, angle):
+        ''' determine whether travelling from a point in the angle direction
+        takes one into or out of the polygon '''
+        # start, end, grid points don't need this
         if not self.polygonal:
             return True
         insideCCW = False
@@ -59,6 +66,7 @@ class Poly:
     def __init__(self):
         self.points = []
     def computeWinding(self):
+        '''according to mathematica, signed area tells winding'''
         signedArea = 0
         for i in range(len(self.points)-1, -1, -1):
             pi = self.points[i - 1]
@@ -73,42 +81,53 @@ def p2p_dist(p1, p2):
     ''' Returns euclidian distance between two points'''
     return p1.dist_to_point(p2) 
 
-def compute_adjacency_list(p_origin, other_points, grid):
+def compute_adjacency_list(p_src, pointGrid, segGrid):
     ''' Creates adjacency list for a point in the form: 
     '{'u' : 10, 'x' : 5}
     '''
     adjacent = dict()
-    for point in other_points:
-        unobstructed = True
-        pathSeg = LineSegment(p_origin.numpyRep, point.numpyRep)
-        toPoint = point.numpyRep - p_origin.numpyRep
-        if np.linalg.norm(toPoint) > MAX_DISTANCE:
-            continue
-        originAngle = math.atan2(toPoint[1], toPoint[0])
-        clear = p_origin.angleOutside(originAngle)
-        if not clear:
-            continue
-        debug_intersectionsTested = 0
-        for square in pathSeg.gridSquares():
-            if square in grid:
-                for edge in grid[square]:
-                    debug_intersectionsTested += 1
-                    if pathSeg.intersects(edge):
-                        unobstructed = False
+    loc = pointToGrid(p_src)
+    for dx in range(-1, 2):
+        for dy in range(-1, 2):
+            searchLoc =  (loc[0] + dx, loc[1] + dy)
+            if searchLoc in pointGrid:
+                for index, p_dest in enumerate(pointGrid[searchLoc]):
+                    if p_dest == p_src:
+                        continue
+                    unobstructed = True
+                    pathSeg = LineSegment(p_src.numpyRep, p_dest.numpyRep)
+                    #vector to the other point from origin
+                    toPoint = p_dest.numpyRep - p_src.numpyRep
+                    ''' multiply by sqrt(2) and change (for float errors)'''
+                    if np.linalg.norm(toPoint) > (MAX_DISTANCE * 1.5):
+                        continue
+                    originAngle = math.atan2(toPoint[1], toPoint[0])
+                    #don't go into the polygon
+                    clear = p_src.angleOutside(originAngle)
+                    if not clear:
+                        continue
+                    debug_intersectionsTested = 0
+                    #use the grid squares to only test necessary segments
+                    for square in pathSeg.gridSquares():
+                        if square in segGrid:
+                            for edge in segGrid[square]:
+                                debug_intersectionsTested += 1
+                                if pathSeg.intersects(edge):
+                                    unobstructed = False
                         #print debug_intersectionsTested * len(other_points)
-                        break
+                                    break
                     #print debug_intersectionsTested * len(other_points)
-        if unobstructed:
-            dist = p_origin.dist_to_point(point)
-            adjacent[point] = dist
+                    if unobstructed:
+                        dist = p_src.dist_to_point(p_dest)
+                        adjacent[p_dest] = dist
     return adjacent
 
-def get_all_points_from_polys(polys):
+def add_all_points_from_polys(polys, grid):
     ''' Breaks a list of polygons into a list of points '''
-    points = list()
     for poly in polys:
-        points.extend(poly.points)
-    return points
+        for point in poly.points:
+            add_point_to_grid(point, grid)
+
 
 def add_all_segments_from_polys(polys, grid):
     #print 'get_all_segments_from_polys'
@@ -147,6 +166,17 @@ def inRange(x, a, b):
     #print x, a, b, (x >= a) and (x <= b)
     return (x >= a) and (x <= b)
 
+def roundGrid(val, gridSize):
+    return int(val / gridSize)
+def pointToGrid(p):
+    return (roundGrid(p.x, MAX_DISTANCE),
+            roundGrid(p.y, MAX_DISTANCE))
+def add_point_to_grid(p, grid):
+    loc = pointToGrid(p)
+    if not loc in grid:
+        grid[loc] = []
+    grid[loc].append(p)
+    
 class LineSegment:
     '''uses numpy points'''
     def __init__(self, p1, p2):
@@ -205,22 +235,20 @@ class LineSegment:
                 return (inRange(xIntersection, self.p1[0], self.p2[0])
                         and inRange(xIntersection, other.p1[0], other.p2[0]))
     def gridSquares(self):
-        def roundGrid(val):
-            return int(val / self.gridSize)
         squares = []
         if (self.vertical):
-            yIter = roundGrid(self.p1[1])
-            xVal = roundGrid(self.p1[0])
-            yStop = roundGrid(self.p2[1])
+            yIter = roundGrid(self.p1[1], self.gridSize)
+            xVal = roundGrid(self.p1[0], self.gridSize)
+            yStop = roundGrid(self.p2[1], self.gridSize)
             while yIter <= yStop:
                 squares.append((xVal, yIter))
                 yIter += 1
         else:
-            xIter = roundGrid(self.p1[0])
-            xRight = roundGrid(self.p2[0])
+            xIter = roundGrid(self.p1[0], self.gridSize)
+            xRight = roundGrid(self.p2[0], self.gridSize)
             while xIter <= xRight:
-                yIter = roundGrid(self.m * self.gridSize * xIter + self.b)
-                yRight = roundGrid(self.m * self.gridSize * (xIter + 1) + self.b)
+                yIter = roundGrid(self.m * self.gridSize * xIter + self.b, self.gridSize)
+                yRight = roundGrid(self.m * self.gridSize * (xIter + 1) + self.b, self.gridSize)
                 yDir = 1 if yRight >= yIter else -1
                 while yIter != yRight:
                     squares.append((xIter, yIter))
