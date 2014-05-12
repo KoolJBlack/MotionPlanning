@@ -72,7 +72,7 @@ def p2p_dist(p1, p2):
     ''' Returns euclidian distance between two points'''
     return p1.dist_to_point(p2) 
 
-def compute_adjacency_list(p_origin, other_points, polyEdges):
+def compute_adjacency_list(p_origin, other_points, grid):
     ''' Creates adjacency list for a point in the form: 
     '{'u' : 10, 'x' : 5}
     '''
@@ -86,10 +86,16 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
         if not clear:
             unobstructed = False
             continue
-        for edge in polyEdges:
-            if pathSeg.intersects(edge):
-                unobstructed = False
-                break
+        debug_intersectionsTested = 0
+        for square in pathSeg.gridSquares():
+            if square in grid:
+                for edge in grid[square]:
+                    debug_intersectionsTested += 1
+                    if pathSeg.intersects(edge):
+                        unobstructed = False
+                        #print debug_intersectionsTested / float(len(other_points))
+                        break
+                    #print debug_intersectionsTested / float(len(other_points))
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -102,17 +108,20 @@ def get_all_points_from_polys(polys):
         points.extend(poly.points)
     return points
 
-def get_all_segments_from_polys(polys):
-    segments = []
+def add_all_segments_from_polys(polys, grid):
     #print 'get_all_segments_from_polys'
     for poly in polys:
         # take advantage of l[-1] being l[len-1]
         #print 'new poly'
         for i in range(len(poly.points)-1, -1, -1):
             #print i, i-1
-            segments.append(LineSegment(poly.points[i].numpyRep,
-                                        poly.points[i-1].numpyRep))
-    return segments
+            segment = LineSegment(poly.points[i].numpyRep,
+                                  poly.points[i-1].numpyRep)
+            for square in segment.gridSquares():
+                if not square in grid:
+                    grid[square] = []
+                grid[square].append(segment)
+            
 
 def nearest_neighbor(p_origin, points):
     ''' Find the nearest neighboring point in the points list and returns it'''
@@ -155,6 +164,7 @@ class LineSegment:
         if not self.vertical:
             self.m = (v[1] / v[0])
             self.b = p2[1] - (self.m * p2[0])
+        self.gridSize = 100
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
     def intersectsInternet(self, other):
@@ -192,9 +202,9 @@ class LineSegment:
                 xIntersection = (other.b - self.b) / (self.m - other.m)
                 return (inRange(xIntersection, self.p1[0], self.p2[0])
                         and inRange(xIntersection, other.p1[0], other.p2[0]))
-    def gridSquares(self, gridSize):
+    def gridSquares(self):
         def roundGrid(val):
-            return int(val / gridSize)
+            return int(val / self.gridSize)
         squares = []
         if (self.vertical):
             yIter = roundGrid(self.p1[1])
@@ -204,11 +214,11 @@ class LineSegment:
                 squares.append((xVal, yIter))
                 yIter += 1
         else:
-            gridRise = self.m * gridSize
             xIter = roundGrid(self.p1[0])
-            while xIter <= self.p2[0]:
-                yIter = roundGrid(self.m * xIter + self.b)
-                yRight = roundGrid(self.m * (xIter + 1) + self.b)
+            xRight = roundGrid(self.p2[0])
+            while xIter <= xRight:
+                yIter = roundGrid(self.m * self.gridSize * xIter + self.b)
+                yRight = roundGrid(self.m * self.gridSize * (xIter + 1) + self.b)
                 yDir = 1 if yRight >= yIter else -1
                 while yIter != yRight:
                     squares.append((xIter, yIter))
