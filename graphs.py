@@ -17,12 +17,19 @@ def compute_visibility_graph(polys, start, end):
     # Assign an arc weight to each item in the graph
     points = get_all_points_from_polys(polys)
     points.extend([start, end])
-    segments = get_all_segments_from_polys(polys)
+    width = 800 #TODO clean
+    height = 800
+    extraFactor = 2 #how much finer than max?
+    points.extend([Point(x, y) for x in xrange(0, width, MAX_DISTANCE / extraFactor)
+                   for y in xrange(0, height, MAX_DISTANCE / extraFactor)])
+    grid = {}
+    add_all_segments_from_polys(polys, grid)
     graph = dict()
     for index, point in enumerate(points):
+        print index
         graph[point] = compute_adjacency_list(point,
                                               points[:index] + points[index + 1:],
-                                              segments)
+                                              grid)
     return graph
 
 

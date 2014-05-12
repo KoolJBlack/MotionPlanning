@@ -7,8 +7,8 @@ from graphs import *
 # =============================================================================
 #MAP_DATA_FILE = 'data/simple_map.osm'
 #MAP_DATA_FILE = 'data/medium_map.osm'
-MAP_DATA_FILE = 'data/four_map.osm'
-#MAP_DATA_FILE = 'data/one_building.osm'
+#MAP_DATA_FILE = 'data/four_map.osm'
+MAP_DATA_FILE = 'data/one_building.osm'
 
 
 
@@ -44,6 +44,8 @@ class MyPygameApp(BasePygameApp):
 		end = Point(self.WIDTH, self.HEIGHT)
 		# Compute the path
 		path = shortest_path_visibility_graph(polys, start, end)
+                #self.path = []
+                #return
 		print 'The shortest path of length:', len(path)
 		for point in path:
 			print point.x, point.y

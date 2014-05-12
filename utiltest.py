@@ -17,14 +17,19 @@ def intersectTest():
     K = np.array([4.0, 6.0])
     
     print "OG-FB T", LineSegment(O, G).intersects(LineSegment(F, B))
-    print "OA-OB T", LineSegment(O, A).intersects(LineSegment(O, B))
-    print "OA-DA T", LineSegment(O, A).intersects(LineSegment(D, A))
+    print "OA-OB F", LineSegment(O, A).intersects(LineSegment(O, B))
+    print "OA-DA F", LineSegment(O, A).intersects(LineSegment(D, A))
     print "EC-BA F", LineSegment(E, C).intersects(LineSegment(B, A))
     print "OD-BA F", LineSegment(O, D).intersects(LineSegment(B, A))
     print "BA-OD F", LineSegment(B, A).intersects(LineSegment(O, D))
     print "DE-BO T", LineSegment(D, E).intersects(LineSegment(B, O))
     print "OG-AB F", LineSegment(O, G).intersects(LineSegment(A, B))
     print "HI-JK T", LineSegment(H, I).intersects(LineSegment(J, K))
+
+    print "OG", LineSegment(O, G).gridSquares(1)
+    print "OB", LineSegment(O, B).gridSquares(1)
+    print "BC", LineSegment(B, C).gridSquares(1)
+    print "DA", LineSegment(D, A).gridSquares(1)
 
 def main():
     intersectTest()
