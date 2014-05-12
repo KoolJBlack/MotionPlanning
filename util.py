@@ -46,10 +46,9 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
         unobstructed = True
         pathSeg = LineSegment(p_origin.numpyRep(), point.numpyRep())
         for edge in polyEdges:
-            if pathSeg.intersectsInternet(edge):
+            if pathSeg.intersects(edge):
                 unobstructed = False
                 break
-
                 #print 'No interesection:'
                 #print pathSeg
                 #print edge
@@ -118,7 +117,7 @@ class LineSegment:
                 self.p1 = temp            
         if not self.vertical:
             self.m = (v[1] / v[0])
-            self.b = p2[1] - (self.m * p2[1])
+            self.b = p2[1] - (self.m * p2[0])
 
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
