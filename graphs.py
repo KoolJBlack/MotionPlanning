@@ -7,15 +7,16 @@ from util import *
 
 def shortest_path_visibility_graph(polys, start, end):
 	# Create the visibility grpah
-	visibility_graph = compute_visibility_graph(polys)	
+	visibility_graph = compute_visibility_graph(polys, start, end)	
 	# Run dijkstra
 	path = shortest_path(visibility_graph, start, end)
 	# Return the points in the path
 	return path
 
-def compute_visibility_graph(polys):
+def compute_visibility_graph(polys, start, end):
 	# Assign an arc weight to each item in the graph
 	points = get_all_points_from_polys(polys)
+        points.extend([start, end])
         segments = get_all_segments_from_polys(polys)
 	graph = dict()
 	for index, point in enumerate(points):

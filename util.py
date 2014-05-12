@@ -46,7 +46,7 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
         unobstructed = True
         pathSeg = LineSegment(p_origin.numpyRep(), point.numpyRep())
         for edge in polyEdges:
-            if pathSeg.intersects(pathSeg):
+            if pathSeg.intersects(edge):
                 unobstructed = False
                 break
         if unobstructed:

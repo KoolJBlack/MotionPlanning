@@ -39,13 +39,9 @@ class MyPygameApp(BasePygameApp):
 		#start = polys[0].points[0]
 		#end = polys[-1].points[-1]
 		start = Point(0,0)
-		mid = Point(self.WIDTH, 0)
 		end = Point(self.WIDTH, self.HEIGHT)
-		poly = Poly()
-		poly.points = [start, mid, end]
 		# Compute the path
-		path = shortest_path_visibility_graph(polys + [poly], start, end)
-
+		path = shortest_path_visibility_graph(polys, start, end)
 		print 'The shortest path of length:', len(path)
 		for point in path:
 			print point.x, point.y
