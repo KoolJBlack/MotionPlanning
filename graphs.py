@@ -7,7 +7,11 @@ from util import *
 
 def shortest_path_visibility_graph(polys, start, end):
 	# Create the visibility grpah
-	visibility_graph = compute_visibility_graph(polys, start, end)	
+	visibility_graph = compute_visibility_graph(polys, start, end)
+	print 'the visibility graph:'
+	for node in visibility_graph:
+		print node, ':'
+		print visibility_graph[node]
 	# Run dijkstra
 	path = shortest_path(visibility_graph, start, end)
 	# Return the points in the path
