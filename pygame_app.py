@@ -23,7 +23,6 @@ LINE_WIDTH = 3
 # Pygame App
 # =============================================================================
 class MyPygameApp(BasePygameApp):
-
 	def setup(self):
 		# Init the screen
 		self.size(800, 800)
@@ -45,6 +44,8 @@ class MyPygameApp(BasePygameApp):
 		end = Point(self.WIDTH, self.HEIGHT)
 		# Compute the path
 		path = shortest_path_visibility_graph(polys, start, end)
+                #self.path = []
+                #return
 		print 'The shortest path of length:', len(path)
 		for point in path:
 			print point.x, point.y
