@@ -1,3 +1,5 @@
+import numpy as np
+
 # =============================================================================
 # Map Primitives
 # =============================================================================
@@ -22,6 +24,9 @@ class Point:
 
     def __add__(self, other):
         return Point(self.x + other.x, self.y + other.y)
+    
+    def numpyRep(self):
+        return np.array([self.x, self.y])
 
 class Poly:
     ''' A poly is a list of points '''
@@ -32,15 +37,22 @@ def p2p_dist(p1, p2):
     ''' Returns euclidian distance between two points'''
     return p1.dist_to_point(p2) 
 
-def compute_adjacency_list(p_origin, other_points):
+def compute_adjacency_list(p_origin, other_points, polyEdges):
     ''' Creates adjacency list for a point in the form: 
     '{'u' : 10, 'x' : 5}
     '''
-    adjacenct = dict()
+    adjacent = dict()
     for point in other_points:
-        dist = p_origin.dist_to_point(point)
-        adjacenct[point] = dist
-    return adjacenct
+        unobstructed = True
+        pathSeg = LineSegment(p_origin.numpyRep(), point.numpyRep())
+        for edge in polyEdges:
+            if pathSeg.intersects(pathSeg):
+                unobstructed = False
+                break
+        if unobstructed:
+            dist = p_origin.dist_to_point(point)
+            adjacent[point] = dist
+    return adjacent
 
 def get_all_points_from_polys(polys):
     ''' Breaks a list of polygons into a list of points '''
@@ -48,6 +60,15 @@ def get_all_points_from_polys(polys):
     for poly in polys:
         points.extend(poly.points)
     return points
+
+def get_all_segments_from_polys(polys):
+    segments = []
+    for poly in polys:
+        # take advantage of l[-1] being l[len-1]
+        for i in range(len(poly.points)-1, -1, -1):
+            segments.append(LineSegment(poly.points[i].numpyRep(),
+                                        poly.points[i-1].numpyRep()))
+    return segments
 
 def nearest_neighbor(p_origin, points):
     ''' Find the nearest neighboring point in the points list and returns it'''
@@ -76,7 +97,7 @@ def inRange(x, a, b):
     return (x >= a) and (x <= b)
 
 class LineSegment:
-    ''' uses numpy points '''
+    '''uses numpy points'''
     def __init__(self, p1, p2):
         self.p1 = p1
         self.p2 = p2
@@ -95,6 +116,10 @@ class LineSegment:
             self.m = (v[1] / v[0])
             self.b = p2[1] - (self.m * p2[1])
     def intersects(self, other):
+        #comparison of numpy arrays requires all
+        if ((self.p1 == other.p1).all() or (self.p1 == other.p2).all()
+            or (self.p2 == other.p1).all() or (self.p2  == other.p2).all()):
+            return False
         if self.vertical:
             if other.vertical:
                 if(self.p1[0] != other.p1[0]):

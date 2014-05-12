@@ -16,9 +16,12 @@ def shortest_path_visibility_graph(polys, start, end):
 def compute_visibility_graph(polys):
 	# Assign an arc weight to each item in the graph
 	points = get_all_points_from_polys(polys)
+        segments = get_all_segments_from_polys(polys)
 	graph = dict()
 	for index, point in enumerate(points):
-		graph[point] = compute_adjacency_list(point, points[:index] + points[index + 1:])
+		graph[point] = compute_adjacency_list(point,
+                                                      points[:index] + points[index + 1:],
+                                                      segments)
 	return graph
 
 
