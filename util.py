@@ -155,7 +155,6 @@ class LineSegment:
         if not self.vertical:
             self.m = (v[1] / v[0])
             self.b = p2[1] - (self.m * p2[0])
-
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
     def intersectsInternet(self, other):
@@ -193,3 +192,27 @@ class LineSegment:
                 xIntersection = (other.b - self.b) / (self.m - other.m)
                 return (inRange(xIntersection, self.p1[0], self.p2[0])
                         and inRange(xIntersection, other.p1[0], other.p2[0]))
+    def gridSquares(self, gridSize):
+        def roundGrid(val):
+            return int(val / gridSize)
+        squares = []
+        if (self.vertical):
+            yIter = roundGrid(self.p1[1])
+            xVal = roundGrid(self.p1[0])
+            yStop = roundGrid(self.p2[1])
+            while yIter <= yStop:
+                squares.append((xVal, yIter))
+                yIter += 1
+        else:
+            gridRise = self.m * gridSize
+            xIter = roundGrid(self.p1[0])
+            while xIter <= self.p2[0]:
+                yIter = roundGrid(self.m * xIter + self.b)
+                yRight = roundGrid(self.m * (xIter + 1) + self.b)
+                yDir = 1 if yRight >= yIter else -1
+                while yIter != yRight:
+                    squares.append((xIter, yIter))
+                    yIter += yDir
+                squares.append((xIter, yIter))
+                xIter += 1
+        return squares
