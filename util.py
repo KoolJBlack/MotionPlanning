@@ -49,10 +49,6 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
             if pathSeg.intersects(edge):
                 unobstructed = False
                 break
-            else:
-                print 'No interesection:'
-                print pathSeg
-                print edge
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -67,12 +63,9 @@ def get_all_points_from_polys(polys):
 
 def get_all_segments_from_polys(polys):
     segments = []
-    print 'get_all_segments_from_polys'
     for poly in polys:
         # take advantage of l[-1] being l[len-1]
-        print 'new poly'
         for i in range(len(poly.points)-1, -1, -1):
-            print i, i-1
             segments.append(LineSegment(poly.points[i].numpyRep(),
                                         poly.points[i-1].numpyRep()))
     return segments
