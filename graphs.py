@@ -22,9 +22,9 @@ def compute_visibility_graph(polys, start, end):
 	points = get_all_points_from_polys(polys)
 	points.extend([start, end])
 	segments = get_all_segments_from_polys(polys)
-	print 'Print all segments'
-	for segment in segments:
-		print segment
+	#print 'Print all segments'
+	#for segment in segments:
+        #print segment
 	graph = dict()
 	for index, point in enumerate(points):
 		graph[point] = compute_adjacency_list(point,

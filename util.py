@@ -46,13 +46,14 @@ def compute_adjacency_list(p_origin, other_points, polyEdges):
         unobstructed = True
         pathSeg = LineSegment(p_origin.numpyRep(), point.numpyRep())
         for edge in polyEdges:
-            if pathSeg.intersects(edge):
+            if pathSeg.intersectsInternet(edge):
                 unobstructed = False
                 break
-            else:
-                print 'No interesection:'
-                print pathSeg
-                print edge
+
+                #print 'No interesection:'
+                #print pathSeg
+                #print edge
+                #raw_input()
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -94,10 +95,6 @@ def nearest_neighbor(p_origin, points):
 
 def ccw(A, B, C):
     return (C[1] - A[1])*(B[0] - A[0]) > (B[1] - A[1])*(C[0] - A[0])
-"""
-return (ccw(self.p1, other.p1, other.p2) != ccw(self.p2, other.p1, other.p2)
-and ccw(self.p1, self.p2, other.p1) != ccw(self.p1, self.p2, other.p2))
-"""
 
 def inRange(x, a, b):
     #print x, a, b, (x >= a) and (x <= b)
@@ -125,6 +122,9 @@ class LineSegment:
 
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
+    def intersectsInternet(self, other):
+        return (ccw(self.p1, other.p1, other.p2) != ccw(self.p2, other.p1, other.p2)
+                and ccw(self.p1, self.p2, other.p1) != ccw(self.p1, self.p2, other.p2))
 
     def intersects(self, other):
         #comparison of numpy arrays requires all
