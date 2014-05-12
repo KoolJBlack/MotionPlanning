@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="CGImap 0.3.3 (30026 thorn-03.openstreetmap.org)" copyright="OpenStreetMap and contributors" attribution="http://www.openstreetmap.org/copyright" license="http://opendatacommons.org/licenses/odbl/1-0/">
+ <bounds minlat="42.3754700" minlon="-71.0893200" maxlat="42.3757100" maxlon="-71.0889800"/>
+ <node id="326264309" visible="true" version="1" changeset="734502" timestamp="2009-01-05T00:51:37Z" user="crschmidt" uid="1034" lat="42.3756224" lon="-71.0891076"/>
+ <node id="326264310" visible="true" version="1" changeset="734502" timestamp="2009-01-05T00:51:37Z" user="crschmidt" uid="1034" lat="42.3756346" lon="-71.0892154"/>
+ <node id="326264311" visible="true" version="1" changeset="734502" timestamp="2009-01-05T00:51:37Z" user="crschmidt" uid="1034" lat="42.3756949" lon="-71.0892029"/>
+ <node id="326264313" visible="true" version="1" changeset="734502" timestamp="2009-01-05T00:51:37Z" user="crschmidt" uid="1034" lat="42.3756827" lon="-71.0890952"/>
+ <node id="327700563" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:34Z" user="OceanVortex" uid="354704" lat="42.3754696" lon="-71.0891433"/>
+ <node id="327700565" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:34Z" user="OceanVortex" uid="354704" lat="42.3754818" lon="-71.0892510"/>
+ <node id="327700567" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:34Z" user="OceanVortex" uid="354704" lat="42.3755437" lon="-71.0892382"/>
+ <node id="327700569" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:35Z" user="OceanVortex" uid="354704" lat="42.3755314" lon="-71.0891305"/>
+ <node id="328103712" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:38Z" user="OceanVortex" uid="354704" lat="42.3755590" lon="-71.0892352"/>
+ <node id="328202390" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:38Z" user="OceanVortex" uid="354704" lat="42.3755373" lon="-71.0890462"/>
+ <node id="328206844" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:39Z" user="OceanVortex" uid="354704" lat="42.3756216" lon="-71.0892221"/>
+ <node id="328214466" visible="true" version="2" changeset="11238608" timestamp="2012-04-09T13:42:39Z" user="OceanVortex" uid="354704" lat="42.3755999" lon="-71.0890332"/>
+ <node id="61171117" visible="true" version="5" changeset="11238608" timestamp="2012-04-09T13:42:44Z" user="OceanVortex" uid="354704" lat="42.3749507" lon="-71.0894318"/>
+ <node id="61171118" visible="true" version="5" changeset="11238608" timestamp="2012-04-09T13:42:44Z" user="OceanVortex" uid="354704" lat="42.3756970" lon="-71.0892782"/>
+ <way id="158695007" visible="true" version="1" changeset="11238608" timestamp="2012-04-09T13:42:00Z" user="OceanVortex" uid="354704">
+  <nd ref="61171117"/>
+  <nd ref="61171118"/>
+  <tag k="attribution" v="Office of Geographic and Environmental Information (MassGIS)"/>
+  <tag k="condition" v="good"/>
+  <tag k="highway" v="residential"/>
+  <tag k="lanes" v="2"/>
+  <tag k="massgis:way_id" v="167374"/>
+  <tag k="name" v="Horace Street"/>
+  <tag k="source" v="massgis_import_v0.1_20071009093301"/>
+  <tag k="surface" v="block"/>
+  <tag k="width" v="9.1"/>
+ </way>
+ <way id="29746481" visible="true" version="2" changeset="17726953" timestamp="2013-09-08T05:29:12Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="327700563"/>
+  <nd ref="327700565"/>
+  <nd ref="327700567"/>
+  <nd ref="327700569"/>
+  <nd ref="327700563"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29642866" visible="true" version="2" changeset="17740315" timestamp="2013-09-08T20:48:03Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="326264309"/>
+  <nd ref="326264310"/>
+  <nd ref="326264311"/>
+  <nd ref="326264313"/>
+  <nd ref="326264309"/>
+  <tag k="building" v="yes"/>
+ </way>
+ <way id="29788289" visible="true" version="2" changeset="17740807" timestamp="2013-09-08T21:15:17Z" user="jremillard-massgis" uid="1137433">
+  <nd ref="328202390"/>
+  <nd ref="328103712"/>
+  <nd ref="328206844"/>
+  <nd ref="328214466"/>
+  <nd ref="328202390"/>
+  <tag k="building" v="yes"/>
+ </way>
+</osm>
