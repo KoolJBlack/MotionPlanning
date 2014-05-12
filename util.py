@@ -93,9 +93,9 @@ def compute_adjacency_list(p_origin, other_points, grid):
                     debug_intersectionsTested += 1
                     if pathSeg.intersects(edge):
                         unobstructed = False
-                        print debug_intersectionsTested / float(len(other_points))
+                        #print debug_intersectionsTested / float(len(other_points))
                         break
-        print debug_intersectionsTested / float(len(other_points))
+                    #print debug_intersectionsTested / float(len(other_points))
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -164,7 +164,7 @@ class LineSegment:
         if not self.vertical:
             self.m = (v[1] / v[0])
             self.b = p2[1] - (self.m * p2[0])
-        self.gridSize = 20
+        self.gridSize = 1
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
     def intersectsInternet(self, other):
