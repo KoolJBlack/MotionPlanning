@@ -1,6 +1,7 @@
 import numpy as np
 import math
 
+MAX_DISTANCE = 100 #TODO clean
 # =============================================================================
 # Map Primitives
 # =============================================================================
@@ -81,10 +82,11 @@ def compute_adjacency_list(p_origin, other_points, grid):
         unobstructed = True
         pathSeg = LineSegment(p_origin.numpyRep, point.numpyRep)
         toPoint = point.numpyRep - p_origin.numpyRep
+        if np.linalg.norm(toPoint) > MAX_DISTANCE:
+            continue
         originAngle = math.atan2(toPoint[1], toPoint[0])
         clear = p_origin.angleOutside(originAngle)
         if not clear:
-            unobstructed = False
             continue
         debug_intersectionsTested = 0
         for square in pathSeg.gridSquares():
@@ -93,9 +95,9 @@ def compute_adjacency_list(p_origin, other_points, grid):
                     debug_intersectionsTested += 1
                     if pathSeg.intersects(edge):
                         unobstructed = False
-                        print debug_intersectionsTested
+                        #print debug_intersectionsTested * len(other_points)
                         break
-                    print debug_intersectionsTested
+                    #print debug_intersectionsTested * len(other_points)
         if unobstructed:
             dist = p_origin.dist_to_point(point)
             adjacent[point] = dist
@@ -164,7 +166,7 @@ class LineSegment:
         if not self.vertical:
             self.m = (v[1] / v[0])
             self.b = p2[1] - (self.m * p2[0])
-        self.gridSize = 1
+        self.gridSize = 5 #TODO clean
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
     def intersectsInternet(self, other):

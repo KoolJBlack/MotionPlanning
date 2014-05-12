@@ -17,6 +17,11 @@ def compute_visibility_graph(polys, start, end):
     # Assign an arc weight to each item in the graph
     points = get_all_points_from_polys(polys)
     points.extend([start, end])
+    width = 800 #TODO clean
+    height = 800
+    extraFactor = 2 #how much finer than max?
+    points.extend([Point(x, y) for x in xrange(0, width, MAX_DISTANCE / extraFactor)
+                   for y in xrange(0, height, MAX_DISTANCE / extraFactor)])
     grid = {}
     add_all_segments_from_polys(polys, grid)
     graph = dict()
