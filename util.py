@@ -199,6 +199,7 @@ class LineSegment:
         self.gridSize = 5 #TODO clean
     def __str__(self):
         return 'P1: '+  str(self.p1[0]) + ', ' + str(self.p1[1])  + '  P2: ' + str(self.p2[0]) + ', ' + str(self.p2[1])
+   
     def intersectsInternet(self, other):
         return (ccw(self.p1, other.p1, other.p2) != ccw(self.p2, other.p1, other.p2)
                 and ccw(self.p1, self.p2, other.p1) != ccw(self.p1, self.p2, other.p2))
