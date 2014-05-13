@@ -105,10 +105,17 @@ class MyPygameApp(BasePygameApp):
 		'''for point in path[1:-1]:
 			if not point.polygonal:
 				path.remove(point)'''
+		# Compute the path distance
+		dist = 0
+		previous = path[0]
+		for point in path[1:]:
+			dist += p2p_dist(previous, point)
+			previous = point
 		# Print Results
 		print 'The shortest path of length:', len(path)
 		for point in path:
 			print point.x, point.y
+		print 'Path length:', dist
 		# Save path
 		self.path = path 
 
