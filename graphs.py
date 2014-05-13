@@ -151,12 +151,15 @@ def dijkstra(graph,start,end, pointGrid, segGrid):
         i = 0
         for vertex in estimated_distances:
             i += 1
-            print i
+
             final_distances[vertex] = estimated_distances[vertex]
-            if vertex == end: break
+            if vertex == end:
+                print i
+                break
             graph[vertex] = compute_adjacency_list(vertex, pointGrid, segGrid)
             for edge in graph[vertex]:
-                path_distance = final_distances[vertex] + graph[vertex][edge]
+                path_distance = (final_distances[vertex] + graph[vertex][edge]
+                                 + (np.linalg.norm(end.numpyRep - edge.numpyRep)))
                 if edge in final_distances:
                     if path_distance < final_distances[edge]:
                         raise ValueError, "Dijkstra: found better path to already-final vertex"

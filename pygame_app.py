@@ -102,9 +102,9 @@ class MyPygameApp(BasePygameApp):
 		# Compute the path
 		path = shortest_path_visibility_graph(polys, start, end)
 		# Clean out all grid point
-		for point in path[1:-1]:
+		'''for point in path[1:-1]:
 			if not point.polygonal:
-				path.remove(point)
+				path.remove(point)'''
 		# Print Results
 		print 'The shortest path of length:', len(path)
 		for point in path:
