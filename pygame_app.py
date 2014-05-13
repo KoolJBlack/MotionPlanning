@@ -9,7 +9,8 @@ from graphs import *
 #MAP_DATA_FILE = 'data/simple_map.osm'
 MAP_DATA_FILE = 'data/medium_map.osm'
 #MAP_DATA_FILE = 'data/four_map.osm'
-#MAP_DATA_FILE = 'data/one_building.osm'
+#MAP_DATA_FILE = 'data/three_building.osm'
+#MAP_DATA_FILE = 'data/large_map.osm'
 
 # Lines
 LINE_WIDTH = 3
@@ -100,6 +101,10 @@ class MyPygameApp(BasePygameApp):
 		end = self.end
 		# Compute the path
 		path = shortest_path_visibility_graph(polys, start, end)
+		# Clean out all grid point
+		for point in path[1:-1]:
+			if not point.polygonal:
+				path.remove(point)
 		# Print Results
 		print 'The shortest path of length:', len(path)
 		for point in path:

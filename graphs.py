@@ -6,15 +6,7 @@ from util import *
 # =============================================================================
 
 def shortest_path_visibility_graph(polys, start, end):
-    # Create the visibility grpah
-    visibility_graph = compute_visibility_graph(polys, start, end)
-    # Run dijkstra
-    path = shortest_path(visibility_graph, start, end)
-    # Return the points in the path
-    return path
-
-def compute_visibility_graph(polys, start, end):
-    # Assign an arc weight to each item in the graph
+    visibility_graph = {}
     pointGrid = {}
     add_all_points_from_polys(polys, pointGrid)
     add_point_to_grid(start, pointGrid)
@@ -26,14 +18,10 @@ def compute_visibility_graph(polys, start, end):
      for y in xrange(0, height, MAX_DISTANCE)]
     segGrid = {}
     add_all_segments_from_polys(polys, segGrid)
-    graph = dict()
-    i = 0
-    for loc in pointGrid:
-        for p in pointGrid[loc]:
-            i += 1
-            print i
-            graph[p] = compute_adjacency_list(p, pointGrid, segGrid)
-    return graph
+    # Run dijkstra
+    path = shortest_path(visibility_graph, start, end, pointGrid, segGrid)
+    # Return the points in the path
+    return path
 
 
 # =============================================================================
@@ -113,7 +101,7 @@ too large, to avoid memory leakage.'''
 
 # http://aspn.activestate.com/ASPN/Cookbook/Python/Recipe/117228
 
-def dijkstra(graph,start,end=None):
+def dijkstra(graph,start,end, pointGrid, segGrid):
         """
         Find shortest paths from the start vertex to all
         vertices nearer than or equal to the end.
@@ -160,24 +148,25 @@ def dijkstra(graph,start,end=None):
         predecessors = {}       # dictionary of predecessors
         estimated_distances = priorityDictionary()   # est.dist. of non-final vert.
         estimated_distances[start] = 0
-
+        i = 0
         for vertex in estimated_distances:
-                final_distances[vertex] = estimated_distances[vertex]
-                if vertex == end: break
-
-                for edge in graph[vertex]:
-                        path_distance = final_distances[vertex] + graph[vertex][edge]
-                        if edge in final_distances:
-                                if path_distance < final_distances[edge]:
-                                        raise ValueError, \
-  "Dijkstra: found better path to already-final vertex"
-                        elif edge not in estimated_distances or path_distance < estimated_distances[edge]:
-                                estimated_distances[edge] = path_distance
-                                predecessors[edge] = vertex
+            i += 1
+            print i
+            final_distances[vertex] = estimated_distances[vertex]
+            if vertex == end: break
+            graph[vertex] = compute_adjacency_list(vertex, pointGrid, segGrid)
+            for edge in graph[vertex]:
+                path_distance = final_distances[vertex] + graph[vertex][edge]
+                if edge in final_distances:
+                    if path_distance < final_distances[edge]:
+                        raise ValueError, "Dijkstra: found better path to already-final vertex"
+                elif edge not in estimated_distances or path_distance < estimated_distances[edge]:
+                    estimated_distances[edge] = path_distance
+                    predecessors[edge] = vertex
 
         return (final_distances,predecessors)
 
-def shortest_path(graph,start,end):
+def shortest_path(graph,start,end, pointGrid, segGrid):
         """
         Find a single shortest path from the given start vertex
         to the given end vertex.
@@ -185,7 +174,7 @@ def shortest_path(graph,start,end):
         The output is a list of the vertices in order along
         the shortest path.
         """
-        final_distances,predecessors = dijkstra(graph,start,end)
+        final_distances,predecessors = dijkstra(graph,start,end, pointGrid, segGrid)
         path = []
         while 1:
                 path.append(end)
